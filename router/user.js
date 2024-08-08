@@ -145,4 +145,30 @@ router.put("/updateUser/:id", (req, res) => {
     })
 })
 
+router.delete("/deleteUserWith/:id", (req, res) => {
+    const { id } = req.params
+
+    const userIndex = users.findIndex(user => user.id === parseInt(id))
+
+    if (userIndex === -1) {
+        return res.status(400).json({
+            succeeded: false,
+            message: `User with id ${id} not found`,
+            statusCode: "02",
+            resultData: null
+        })
+    }
+
+    users.splice(userIndex, 1);
+
+    writeToJSONFile(users)
+
+    res.status(successStatusCode).json({
+        succeeded: true,
+        message: `User with id ${id} successfully deleted`,
+        statusCode: "00",
+        resultData: null
+    })
+})
+
 module.exports = router
