@@ -105,4 +105,44 @@ router.post("/createUser", (req, res) => {
     console.log(users)
 })
 
+router.put("/updateUser/:id", (req, res) => {
+    const { id } = req.params
+    const { name, email, phone } = req.body
+
+    if (!name && !email && !phone) {
+        return res.status(400).json({
+            succeeded: true,
+            message: "Provide data for update.",
+            statusCode: "02",
+            resultData: null
+        })
+    }
+
+    const userIndex = users.findIndex(user => user.id === parseInt(id))
+
+    console.log(`see user index ${userIndex}`)
+
+    if (userIndex === -1) {
+        return res.status(400).json({
+            succeeded: true,
+            message: "User not found",
+            statusCode: "02",
+            resultData: null
+        })
+    }
+
+    if (name) users[userIndex].name = name
+    if (email) users[userIndex].email = email
+    if (phone) users[userIndex].phone = phone
+
+    writeToJSONFile(users)
+
+    res.status(successStatusCode).json({
+        succeeded: true,
+        message: "user updated successfully successful",
+        statusCode: "00",
+        resultData: users[userIndex]
+    })
+})
+
 module.exports = router
