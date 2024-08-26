@@ -10,12 +10,12 @@ router.use(bodyParser.urlencoded({ extended: true }));
 
 router.get("/getAllUsers", getAllUsers)
 
-router.get(`/getUserWith/:id`, getUsersWith)
+router.get(`/getUserWith/:_id`, getUsersWith)
 
 router.post("/createUser", createUser)
 
-router.put("/updateUser/:id", updateUser)
+router.put("/updateUser/:_id", updateUser)
 
-router.delete("/deleteUserWith/:id", deleteUser)
+router.delete("/deleteUserWith/:_id", deleteUser)
 
 module.exports = router
